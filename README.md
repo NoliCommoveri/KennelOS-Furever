@@ -195,7 +195,9 @@ furever/
     training.html + .js  — Training: track dropdown (AKC Timeline / S.T.A.R. /
                            Kennel Club), skills grouped by stage or level, log a
                            practice + mark learned (progress ports across tracks)
-    documents.html+ .js  — Documents: file vault (add/download/hard-delete)
+    documents.html+ .js  — Documents: file vault, two collapsible buckets (family
+                           docs above breeder's, each defaults open only if it has
+                           documents). "+ New" opens a modal (add/download/hard-delete)
     photos.html   + .js  — Photos: gallery grid + view modal (add/hard-delete)
     contacts.html + .js  — Contacts: family-wide, lives under At A Glance (not a
                            pet page). Each contact names the specific pets it
