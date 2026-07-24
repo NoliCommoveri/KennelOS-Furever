@@ -205,9 +205,15 @@ furever/
                            <pets>", "+ New" opens a modal, editing an existing
                            contact requires an explicit Edit click.
     alldocuments.html+.js— Documents (At A Glance toggle): family-wide, display-only
-                           view of every pet's documents, bucketed by pet (each
-                           bucket open only if that pet has documents). Download
-                           only — add/remove stays on the pet-scoped documents.html.
+                           view of every pet's documents (family + breeder mixed,
+                           nothing here is editable), bucketed by pet, every bucket
+                           collapsed by default. Download only — add/remove stays
+                           on the pet-scoped documents.html.
+    allphotos.html+ .js  — Photo Gallery: standalone sidebar entry (between At A
+                           Glance and the pet list), display-only. Pet tabs switch
+                           which pet's gallery shows (local view state, doesn't
+                           touch the app-wide active pet); no add/remove — that
+                           stays on the pet-scoped photos.html.
     addpet.html   + .js  — the Add New Pet form (creates a self pet, opens Profile)
     family.html   + .js  — Family & Settings: family name, shared vet (re-snapshot
                            to every current pet on save), theme, backup & restore,

@@ -7,9 +7,11 @@
 //      set it up). On mobile the banner hosts the ☰ drawer toggle.
 //
 //   1. The LEFT SIDEBAR (into <div id="app-nav">) — the app's primary nav:
-//        At A Glance · one entry per pet · Add New Pet
+//        At A Glance · Photo Gallery · one entry per pet · Add New Pet
 //      On narrow screens it becomes a drawer that slides in from the left. The
-//      pet entries double as the active-pet picker.
+//      pet entries double as the active-pet picker. Photo Gallery is its own
+//      standalone, family-wide page (display-only, pick-a-pet tabs inside it) —
+//      not part of the At-A-Glance toggle group and not a pet subnav tab.
 //
 //   2. The TOP SUB-NAV (into <div id="app-subnav">) — either:
 //        - the pet-scoped page tabs (Profile · Health · Feeding · Potty · Training ·
@@ -117,6 +119,7 @@ async function renderSidebar(prefix) {
   // At A Glance is lit on today.html and contacts.html (both live under it now);
   // on any pet page the active pet is lit instead (whichever of its tabs is open).
   const glanceActive = GLANCE_FILES.includes(here) ? ' active' : '';
+  const galleryActive = here === 'allphotos.html' ? ' active' : '';
 
   const petLinks = pets.length
     ? pets.map((p) => {
@@ -130,6 +133,9 @@ async function renderSidebar(prefix) {
   host.innerHTML = `
     <a class="side-link${glanceActive}" href="${prefix}pages/today.html">
       <span class="side-ava" aria-hidden="true">✨</span><span class="side-name">At A Glance</span>
+    </a>
+    <a class="side-link${galleryActive}" href="${prefix}pages/allphotos.html">
+      <span class="side-ava" aria-hidden="true">📷</span><span class="side-name">Photo Gallery</span>
     </a>
     ${pets.length ? `<div class="side-label">Pets</div>${petLinks}` : ''}
     <div class="side-add">

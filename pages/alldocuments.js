@@ -1,9 +1,11 @@
 // alldocuments.js — the At A Glance "Documents" toggle: every pet's paperwork in
-// one place, display-only. Bucketed by pet (family + breeder docs together, newest
-// first — same order documentRepo.getByPet already returns); each pet's bucket
-// defaults open only if it actually has documents. No add/edit/remove here —
-// that's still pages/documents.js, the pet-scoped vault; this is purely a read
-// view with a Download action, same non-destructive read the vault itself allows.
+// one place, display-only. Bucketed by pet (family + breeder docs mixed together,
+// newest first — same order documentRepo.getByPet already returns; nothing here
+// is editable either way, so there's no reason to separate them). Every bucket
+// starts collapsed, always, regardless of how many documents it holds. No
+// add/edit/remove here — that's still pages/documents.js, the pet-scoped vault;
+// this is purely a read view with a Download action, same non-destructive read
+// the vault itself allows.
 import { petRepo } from '../data/petRepo.js';
 import { documentRepo } from '../data/documentRepo.js';
 import { fileRepo } from '../data/fileRepo.js';
@@ -35,11 +37,13 @@ function docRowHtml(doc) {
     </div>`;
 }
 
+// Always starts collapsed — a glance view, not a worklist, so nothing forces
+// itself open even when a pet does have documents.
 function petBucketHtml(pet, docs) {
   const inner = docs.length
     ? docs.map(docRowHtml).join('')
     : `<p class="muted" style="padding:.5rem .2rem 0;">No documents filed for ${esc(pet.name)} yet.</p>`;
-  return `<details class="bucket"${docs.length ? ' open' : ''}>
+  return `<details class="bucket">
     <summary class="bucket-summary"><span class="bucket-title">${esc(pet.name)}</span><span class="bucket-count">${docs.length ? docs.length : 'nothing yet'}</span></summary>
     <div>${inner}</div>
   </details>`;
