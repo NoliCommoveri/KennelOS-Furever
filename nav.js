@@ -14,8 +14,11 @@
 //   2. The TOP SUB-NAV (into <div id="app-subnav">) — either:
 //        - the pet-scoped page tabs (Profile · Health · Feeding · Potty · Training ·
 //          Documents · Photos), shown while a pet page is open; or
-//        - the At-A-Glance-level toggle (Due Soon · Contacts), shown on today.html
-//          and contacts.html — Contacts is family-wide now, not a pet page.
+//        - the At-A-Glance-level toggle (Due Soon · Contacts · Documents), shown
+//          on today.html / contacts.html / alldocuments.html — all family-wide,
+//          not pet pages. (alldocuments.html is a display-only, bucketed-by-pet
+//          view; the pet-scoped documents.html vault, with add/remove, is
+//          separate and still lives on the pet subnav.)
 //      (Health is the merged former Reminders + Log: the derived schedule, bucketed
 //      by life-stage, with inline completed-on logging and the care history.)
 import { petRepo } from './data/petRepo.js';
@@ -49,10 +52,11 @@ const PET_TABS = [
 const PET_FILES = PET_TABS.map((t) => t.file);
 
 // The At-A-Glance-level toggle: family-wide pages (no active-pet scoping) that
-// share a "Due Soon | Contacts" tab bar instead of the pet subnav above.
+// share a "Due Soon | Contacts | Documents" tab bar instead of the pet subnav above.
 const GLANCE_TABS = [
   { file: 'today.html', label: 'Due Soon' },
-  { file: 'contacts.html', label: 'Contacts' }
+  { file: 'contacts.html', label: 'Contacts' },
+  { file: 'alldocuments.html', label: 'Documents' }
 ];
 const GLANCE_FILES = GLANCE_TABS.map((t) => t.file);
 

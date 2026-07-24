@@ -184,7 +184,7 @@ furever/
                            failure; also applies the saved theme pre-paint
   pages/
     today.html    + .js  — At A Glance: the family-wide due-soon feed (one cross-pet
-                           view). Sub-nav toggles Due Soon / Contacts.
+                           view). Sub-nav toggles Due Soon / Contacts / Documents.
     profile.html  + .js  — a pet's landing page: Add-Picture box (saved to
                            pet.photo_url) + large-font details, inline edit, breeder card
     health.html   + .js  — Health (merged Reminders + Log): derived schedule bucketed
@@ -204,6 +204,10 @@ furever/
                            applies to (pet_ids); collapsed rows show type + "For
                            <pets>", "+ New" opens a modal, editing an existing
                            contact requires an explicit Edit click.
+    alldocuments.html+.js— Documents (At A Glance toggle): family-wide, display-only
+                           view of every pet's documents, bucketed by pet (each
+                           bucket open only if that pet has documents). Download
+                           only — add/remove stays on the pet-scoped documents.html.
     addpet.html   + .js  — the Add New Pet form (creates a self pet, opens Profile)
     family.html   + .js  — Family & Settings: family name, shared vet (re-snapshot
                            to every current pet on save), theme, backup & restore,
