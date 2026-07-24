@@ -184,7 +184,7 @@ furever/
                            failure; also applies the saved theme pre-paint
   pages/
     today.html    + .js  — At A Glance: the family-wide due-soon feed (one cross-pet
-                           view; no sub-nav)
+                           view). Sub-nav toggles Due Soon / Contacts.
     profile.html  + .js  — a pet's landing page: Add-Picture box (saved to
                            pet.photo_url) + large-font details, inline edit, breeder card
     health.html   + .js  — Health (merged Reminders + Log): derived schedule bucketed
@@ -197,11 +197,15 @@ furever/
                            practice + mark learned (progress ports across tracks)
     documents.html+ .js  — Documents: file vault (add/download/hard-delete)
     photos.html   + .js  — Photos: gallery grid + view modal (add/hard-delete)
-    contacts.html + .js  — Contacts: the pet's own + family-wide contacts (add/
-                           edit/archive)
+    contacts.html + .js  — Contacts: family-wide, lives under At A Glance (not a
+                           pet page). Each contact names the specific pets it
+                           applies to (pet_ids); collapsed rows show type + "For
+                           <pets>", "+ New" opens a modal, editing an existing
+                           contact requires an explicit Edit click.
     addpet.html   + .js  — the Add New Pet form (creates a self pet, opens Profile)
-    family.html   + .js  — Family & Settings: family name, family-wide vet, theme,
-                           backup & restore, storage/reset danger zone
+    family.html   + .js  — Family & Settings: family name, shared vet (re-snapshot
+                           to every current pet on save), theme, backup & restore,
+                           storage/reset danger zone
   vendor/
     dexie.min.mjs        — vendored Dexie, COMMITTED (like shared/vendor/) so the
                            folder is directly servable — no build step to run it

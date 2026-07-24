@@ -11,9 +11,11 @@
 //      On narrow screens it becomes a drawer that slides in from the left. The
 //      pet entries double as the active-pet picker.
 //
-//   2. The TOP SUB-NAV (into <div id="app-subnav">) — the pet-scoped page tabs
-//        Profile · Health · Feeding · Potty · Training · Documents · Photos · Contacts
-//      shown only while a pet page is open. At A Glance has no sub-nav for now.
+//   2. The TOP SUB-NAV (into <div id="app-subnav">) — either:
+//        - the pet-scoped page tabs (Profile · Health · Feeding · Potty · Training ·
+//          Documents · Photos), shown while a pet page is open; or
+//        - the At-A-Glance-level toggle (Due Soon · Contacts), shown on today.html
+//          and contacts.html — Contacts is family-wide now, not a pet page.
 //      (Health is the merged former Reminders + Log: the derived schedule, bucketed
 //      by life-stage, with inline completed-on logging and the care history.)
 import { petRepo } from './data/petRepo.js';
@@ -33,8 +35,8 @@ function currentFile() {
   return parts[parts.length - 1] || 'index.html';
 }
 
-// The pet-scoped pages, in tab order. At A Glance (today) is deliberately NOT
-// here: it is family-wide and carries no sub-nav.
+// The pet-scoped pages, in tab order. At A Glance and Contacts are deliberately
+// NOT here — they're family-wide and get their own tab bar, GLANCE_TABS below.
 const PET_TABS = [
   { file: 'profile.html', label: 'Profile' },
   { file: 'health.html', label: 'Health' },
@@ -42,10 +44,17 @@ const PET_TABS = [
   { file: 'potty.html', label: 'Potty' },
   { file: 'training.html', label: 'Training' },
   { file: 'documents.html', label: 'Documents' },
-  { file: 'photos.html', label: 'Photos' },
-  { file: 'contacts.html', label: 'Contacts' }
+  { file: 'photos.html', label: 'Photos' }
 ];
 const PET_FILES = PET_TABS.map((t) => t.file);
+
+// The At-A-Glance-level toggle: family-wide pages (no active-pet scoping) that
+// share a "Due Soon | Contacts" tab bar instead of the pet subnav above.
+const GLANCE_TABS = [
+  { file: 'today.html', label: 'Due Soon' },
+  { file: 'contacts.html', label: 'Contacts' }
+];
+const GLANCE_FILES = GLANCE_TABS.map((t) => t.file);
 
 // Resolve the active pet: the stored id if it still exists, otherwise the first
 // pet (and persist that so the whole app agrees). Returns { pets, activeId }.
@@ -101,9 +110,9 @@ async function renderSidebar(prefix) {
   const onPetPage = PET_FILES.includes(here);
   const { pets, activeId } = await resolveActive();
 
-  // At A Glance is lit on today.html; on any pet page the active pet is lit
-  // instead (whichever of its tabs is open).
-  const glanceActive = here === 'today.html' ? ' active' : '';
+  // At A Glance is lit on today.html and contacts.html (both live under it now);
+  // on any pet page the active pet is lit instead (whichever of its tabs is open).
+  const glanceActive = GLANCE_FILES.includes(here) ? ' active' : '';
 
   const petLinks = pets.length
     ? pets.map((p) => {
@@ -136,9 +145,11 @@ function renderSubnav() {
   const host = document.getElementById('app-subnav');
   if (!host) return;
   const here = currentFile();
-  if (!PET_FILES.includes(here)) { host.innerHTML = ''; return; }
 
-  const tabs = PET_TABS.map((t) => {
+  const tabSet = PET_FILES.includes(here) ? PET_TABS : GLANCE_FILES.includes(here) ? GLANCE_TABS : null;
+  if (!tabSet) { host.innerHTML = ''; return; }
+
+  const tabs = tabSet.map((t) => {
     const active = t.file === here ? ' active' : '';
     return `<a class="subnav-link${active}" href="${t.file}">${t.label}</a>`;
   }).join('');
